@@ -4,7 +4,6 @@ import { Image } from "expo-image";
 import { Eye, Heart, ImageOff, MapPin, Star } from "lucide-react-native";
 
 import { cn } from "@/shared/utils/cn";
-import { cardShadow } from "@/shared/lib/shadows";
 import { formatPrice } from "@/shared/utils/formatPrice";
 import { CONDITION_LABEL } from "@/shared/data/phones.data";
 import type { Phone } from "@/shared/types";
@@ -28,7 +27,6 @@ export default function PhoneCard({ phone, saved, onToggleSave, className }: Pro
   return (
     <Pressable
       onPress={() => router.push({ pathname: "/phones/[id]", params: { id: phone._id } })}
-      style={cardShadow}
       className={cn("overflow-hidden rounded-2xl border border-border bg-white", className)}
     >
       <View className="aspect-square bg-muted">

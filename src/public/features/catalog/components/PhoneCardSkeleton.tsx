@@ -1,13 +1,8 @@
 import { View } from "react-native";
 
-import { cardShadow } from "@/shared/lib/shadows";
-
 export default function PhoneCardSkeleton() {
   return (
-    <View
-      style={cardShadow}
-      className="flex-1 overflow-hidden rounded-2xl border border-border bg-white"
-    >
+    <View className="flex-1 overflow-hidden rounded-2xl border border-border bg-white">
       <View className="aspect-square bg-muted" />
       <View className="gap-2 p-2.5">
         <View className="h-3 w-4/5 rounded bg-muted" />
