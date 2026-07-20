@@ -2,6 +2,7 @@ import { type PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
 
 import { store } from "@/shared/store/store";
@@ -12,8 +13,10 @@ export default function AppProviders({ children }: PropsWithChildren) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
-          {children}
-          <Toast />
+          <BottomSheetModalProvider>
+            {children}
+            <Toast />
+          </BottomSheetModalProvider>
         </SafeAreaProvider>
       </QueryClientProvider>
     </Provider>
