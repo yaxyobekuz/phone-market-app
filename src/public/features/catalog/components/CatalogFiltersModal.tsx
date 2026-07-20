@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
-import {
+import BottomSheet, {
   BottomSheetBackdrop,
-  BottomSheetModal,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { X } from "lucide-react-native";
 
@@ -82,13 +82,13 @@ export default function CatalogFiltersModal({
   onChange,
   onReset,
 }: Props) {
-  const ref = useRef<BottomSheetModal>(null);
+  const ref = useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const onlyDigits = (t: string) => t.replace(/[^0-9]/g, "");
 
   useEffect(() => {
-    if (visible) ref.current?.present();
-    else ref.current?.dismiss();
+    if (visible) ref.current?.snapToIndex(0);
+    else ref.current?.close();
   }, [visible]);
 
   const renderBackdrop = useCallback(
@@ -104,11 +104,12 @@ export default function CatalogFiltersModal({
   );
 
   return (
-    <BottomSheetModal
+    <BottomSheet
       ref={ref}
+      index={-1}
       snapPoints={SNAP_POINTS}
       enablePanDownToClose
-      onDismiss={onClose}
+      onClose={onClose}
       backdropComponent={renderBackdrop}
       handleIndicatorStyle={{ backgroundColor: "#cbd5e1", width: 40 }}
     >
@@ -121,7 +122,11 @@ export default function CatalogFiltersModal({
 
       <BottomSheetScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: 20, gap: 20, paddingBottom: 16 }}
+        contentContainerStyle={{
+          paddingHorizontal: 20,
+          gap: 20,
+          paddingBottom: 16,
+        }}
       >
         <View className="gap-2">
           <Text className="text-sm font-medium text-foreground">Holati</Text>
@@ -183,6 +188,6 @@ export default function CatalogFiltersModal({
         />
         <Button title="Qo'llash" className="flex-1" onPress={onClose} />
       </View>
-    </BottomSheetModal>
+    </BottomSheet>
   );
 }
