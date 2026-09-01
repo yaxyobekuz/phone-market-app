@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
-import BottomSheet, {
+import {
   BottomSheetBackdrop,
+  BottomSheetModal,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { X } from "lucide-react-native";
 
@@ -82,13 +82,13 @@ export default function CatalogFiltersModal({
   onChange,
   onReset,
 }: Props) {
-  const ref = useRef<BottomSheet>(null);
+  const ref = useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const onlyDigits = (t: string) => t.replace(/[^0-9]/g, "");
 
   useEffect(() => {
-    if (visible) ref.current?.snapToIndex(0);
-    else ref.current?.close();
+    if (visible) ref.current?.present();
+    else ref.current?.dismiss();
   }, [visible]);
 
   const renderBackdrop = useCallback(
@@ -104,12 +104,11 @@ export default function CatalogFiltersModal({
   );
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={ref}
-      index={-1}
       snapPoints={SNAP_POINTS}
       enablePanDownToClose
-      onClose={onClose}
+      onDismiss={onClose}
       backdropComponent={renderBackdrop}
       handleIndicatorStyle={{ backgroundColor: "#cbd5e1", width: 40 }}
     >
@@ -188,6 +187,6 @@ export default function CatalogFiltersModal({
         />
         <Button title="Qo'llash" className="flex-1" onPress={onClose} />
       </View>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 }
